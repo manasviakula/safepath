@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SafePath | Emergency Evacuation Planner</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header><div><h1>🚨 SafePath</h1><p>Emergency Evacuation Route Planner</p></div></header>
+  <main>
+    <section class="panel controls">
+      <h2>Route Planner</h2>
+      <label>Starting Location</label>
+      <select id="start"><option value="A">Room A</option><option value="B">Room B</option><option value="C">Room C</option><option value="D">Room D</option></select>
+      <label>Block a Path</label>
+      <select id="blocked"><option value="">No blockage</option><option value="B-D">B → D</option><option value="B-C">B → C</option><option value="C-E1">C → Exit 1</option><option value="D-E2">D → Exit 2</option><option value="A-B">A → B</option></select>
+      <button onclick="findRoute()">Find Evacuation Route</button>
+      <button class="secondary" onclick="simulateBlockage()">Simulate Dynamic Blockage</button>
+      <div id="status" class="status">Ready.</div>
+    </section>
+
+    <section class="panel map-panel">
+      <h2>Building Map</h2>
+      <svg id="map" viewBox="0 0 700 400" role="img" aria-label="Building graph">
+        <line id="edge-AB" x1="110" y1="90" x2="300" y2="90" class="edge"/><text x="195" y="75">10m</text>
+        <line id="edge-BC" x1="300" y1="90" x2="500" y2="70" class="edge"/><text x="395" y="60">20m</text>
+        <line id="edge-BD" x1="300" y1="90" x2="300" y2="280" class="edge"/><text x="315" y="190">15m</text>
+        <line id="edge-CE1" x1="500" y1="70" x2="610" y2="200" class="edge"/><text x="555" y="125">10m</text>
+        <line id="edge-DE2" x1="300" y1="280" x2="610" y2="320" class="edge"/><text x="450" y="315">10m</text>
+        <g class="node" data-node="A"><circle cx="110" cy="90" r="32"/><text x="110" y="95">A</text><text x="110" y="140">Room A</text></g>
+        <g class="node" data-node="B"><circle cx="300" cy="90" r="32"/><text x="300" y="95">B</text><text x="300" y="140">Room B</text></g>
+        <g class="node" data-node="C"><circle cx="500" cy="70" r="32"/><text x="500" y="75">C</text><text x="500" y="120">Room C</text></g>
+        <g class="node" data-node="D"><circle cx="300" cy="280" r="32"/><text x="300" y="285">D</text><text x="300" y="330">Room D</text></g>
+        <g class="node exit"><circle cx="610" cy="200" r="35"/><text x="610" y="205">E1</text><text x="610" y="250">Exit 1</text></g>
+        <g class="node exit"><circle cx="610" cy="320" r="35"/><text x="610" y="325">E2</text><text x="610" y="370">Exit 2</text></g>
+      </svg>
+    </section>
+
+    <section class="panel result" id="result"><h2>Result</h2><p>Select a starting point and find a route.</p></section>
+  </main>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
